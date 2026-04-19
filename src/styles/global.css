@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Zelená — udržitelnost, energie, příroda */
+    --color-brand-dark: #14532D;
+    --color-brand: #16A34A;
+    --color-brand-light: #4ADE80;
+    --color-brand-lighter: #DCFCE7;
+    --color-surface: #FFFFFF;
+    --color-surface-muted: #F7FDF9;
+    --color-surface-border: #D1FAE5;
+    --color-text: #1F2937;
+    --color-text-muted: #6B7280;
+    --color-text-inverted: #FFFFFF;
+    --theme-hero-accent: #BBF7D0;
+    --theme-hero-accent-soft: rgba(187, 247, 208, 0.8);
+    --theme-footer-border: #166534;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply font-sans;
+    color: var(--color-text);
+    background-color: var(--color-surface);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-bold tracking-tight;
+    color: var(--color-brand-dark);
+  }
+}
+
+@layer components {
+  .container-narrow {
+    @apply mx-auto max-w-3xl px-5 sm:px-6;
+  }
+
+  .container-wide {
+    @apply mx-auto max-w-6xl px-5 sm:px-6;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg px-6 py-3 text-sm font-semibold text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+    background-color: var(--color-brand);
+  }
+  .btn-primary:hover {
+    background-color: var(--color-brand-dark);
+    @apply shadow-md -translate-y-px;
+  }
+  .btn-primary:focus {
+    --tw-ring-color: var(--color-brand);
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center rounded-lg border-2 px-6 py-3 text-sm font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+    border-color: var(--color-brand);
+    color: var(--color-brand);
+  }
+  .btn-outline:hover {
+    background-color: var(--color-brand);
+    color: white;
+    @apply shadow-md -translate-y-px;
+  }
+  .btn-outline:focus {
+    --tw-ring-color: var(--color-brand);
+  }
+
+  .dark-section-text {
+    color: var(--theme-hero-accent);
+  }
+}
