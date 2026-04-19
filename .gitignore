@@ -1,0 +1,10 @@
+dist/
+.output/
+.vercel
+.netlify
+node_modules/
+.DS_Store
+*.local
+.env
+.env.*
+!.env.example

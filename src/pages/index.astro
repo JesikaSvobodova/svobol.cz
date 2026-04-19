@@ -1,0 +1,107 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/Hero.astro";
+import { site } from "@/data/site";
+---
+
+<BaseLayout>
+  <Hero />
+
+  <!-- Služby -->
+  <section class="py-16 md:py-24">
+    <div class="container-wide">
+      <div class="mb-12 text-center">
+        <div class="mx-auto mb-4 h-1 w-16 rounded-full" style="background: var(--color-brand-light);"></div>
+        <h2 class="mb-3 text-3xl md:text-4xl">Co děláme</h2>
+        <p class="text-text-muted">Nabíjecí stanice a fotovoltaika — vše na jednom místě.</p>
+      </div>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {site.services.map((s) => (
+          <div class="rounded-2xl border border-surface-border bg-white p-8 transition-shadow hover:shadow-md">
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-lighter text-brand">
+              {s.icon === "bolt" && (
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                </svg>
+              )}
+              {s.icon === "sun" && (
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+                </svg>
+              )}
+              {s.icon === "key" && (
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
+                </svg>
+              )}
+            </div>
+            <h3 class="mb-3 text-xl text-brand-dark">{s.title}</h3>
+            <p class="mb-4 leading-relaxed text-text-muted">{s.description}</p>
+            <a href={s.link} class="text-sm font-semibold text-brand hover:text-brand-dark">
+              {s.linkLabel} &rarr;
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Proč my -->
+  <section class="bg-surface-muted py-16 md:py-24">
+    <div class="container-narrow text-center">
+      <div class="mx-auto mb-4 h-1 w-16 rounded-full" style="background: var(--color-brand-light);"></div>
+      <h2 class="mb-6 text-3xl md:text-4xl">Proč Svobol?</h2>
+      <div class="grid gap-6 text-left sm:grid-cols-3">
+        <div class="rounded-xl bg-white p-6 shadow-sm">
+          <div class="mb-3 text-3xl font-bold text-brand">01</div>
+          <h3 class="mb-2 text-lg text-brand-dark">Certifikovaný partner</h3>
+          <p class="text-sm text-text-muted">Oficiální partner značky Svolbox s certifikovanými techniky.</p>
+        </div>
+        <div class="rounded-xl bg-white p-6 shadow-sm">
+          <div class="mb-3 text-3xl font-bold text-brand">02</div>
+          <h3 class="mb-2 text-lg text-brand-dark">Vše pod jednou střechou</h3>
+          <p class="text-sm text-text-muted">Nabíjecí stanice i FVE — od projektu až po spuštění.</p>
+        </div>
+        <div class="rounded-xl bg-white p-6 shadow-sm">
+          <div class="mb-3 text-3xl font-bold text-brand">03</div>
+          <h3 class="mb-2 text-lg text-brand-dark">Pomoc s dotacemi</h3>
+          <p class="text-sm text-text-muted">Pomůžeme s žádostmi o dotace OPŽP, NZB 2030 a další.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Svolbox sekce -->
+  <section class="py-16 md:py-24">
+    <div class="container-narrow text-center">
+      <div class="mx-auto mb-4 h-1 w-16 rounded-full" style="background: var(--color-brand-light);"></div>
+      <h2 class="mb-4 text-3xl md:text-4xl">Nabíjecí stanice Svolbox</h2>
+      <p class="mb-8 text-lg leading-relaxed text-text-muted">
+        Jsme certifikovaný partner Svolbox &mdash; českého výrobce nabíjecích stanic pro elektromobily.
+        Dodáváme a instalujeme stanice pro rodinné domy, bytové komplexy i firemní parkoviště.
+      </p>
+      <a href="https://svolbox.com" target="_blank" rel="noopener noreferrer" class="btn-outline">
+        Zjistit více na svolbox.com
+      </a>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="relative overflow-hidden bg-brand-dark py-16 md:py-24">
+    <div class="absolute -right-20 -top-20 h-80 w-80 rounded-full opacity-5" style="background: radial-gradient(circle, white, transparent 70%);"></div>
+    <div class="container-narrow relative text-center">
+      <h2 class="mb-4 text-3xl text-white md:text-4xl">Poptávejte zdarma</h2>
+      <p class="mb-8 text-lg" style="color: var(--theme-hero-accent-soft);">
+        Nezávazná konzultace a nabídka do 48 hodin.
+      </p>
+      <div class="flex flex-col justify-center gap-3 sm:flex-row">
+        <a href="/kontakt" class="btn-primary bg-white !text-brand-dark hover:!bg-gray-50">
+          Kontaktovat nás
+        </a>
+        <a href={`mailto:${site.contact.email}`} class="btn-outline !border-current hover:!bg-white/10 hover:!text-white" style="color: var(--theme-hero-accent); border-color: var(--theme-hero-accent) !important;">
+          {site.contact.email}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
