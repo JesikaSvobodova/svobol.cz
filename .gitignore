@@ -1,10 +1,33 @@
-dist/
-.output/
-.vercel
-.netlify
+# Závislosti a build
 node_modules/
-.DS_Store
-*.local
+dist/
+.astro/
+.output/
+.vercel/
+.netlify/
+
+# Tajemství — do repa nikdy nesmí (hlídá i CI: gitleaks + check:repo)
 .env
 .env.*
 !.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*
+secrets/
+id_rsa*
+id_ed25519*
+
+# Soukromé poznámky a podklady, které nepatří na veřejný web
+private/
+soukrome/
+
+# Lokální nastavení nástrojů
+.claude/settings.local.json
+*.local
+
+# Systémové smetí
+.DS_Store
+Thumbs.db
+*.log

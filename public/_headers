@@ -1,0 +1,11 @@
+# Bezpečnostní hlavičky.
+#
+# POZOR: GitHub Pages tenhle soubor NEČTE — hlavičky se tam nastavit nedají.
+# Leží tu pro případ přesunu na Cloudflare Pages / Netlify, kde platí.
+# Viz docs/deploy-a-dns.md, sekce "Co GitHub Pages neumí".
+
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()

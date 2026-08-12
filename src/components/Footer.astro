@@ -1,69 +1,45 @@
 ---
+/**
+ * Patička. Kontakty se berou ze `site.contact` — prázdné hodnoty se
+ * záměrně nevykreslí, ať na webu nesvítí prázdný řádek nebo placeholder.
+ */
 import { site } from "@/data/site";
+
+const { email, phone } = site.contact;
+const year = new Date().getFullYear();
 ---
 
-<footer class="border-t bg-brand-dark text-text-inverted" style="border-color: var(--theme-footer-border);">
-  <div class="container-wide py-12">
-    <div class="grid gap-10 md:grid-cols-3">
-      <!-- Column 1: Brand -->
-      <div>
-        <div class="mb-3 flex items-center gap-2">
-          <svg class="h-7 w-7 text-brand-light" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-          </svg>
-          <h3 class="text-lg font-bold text-white">{site.name}</h3>
-        </div>
-        <p class="text-sm leading-relaxed" style="color: var(--theme-hero-accent-soft);">
-          Nabíjecí stanice Svolbox a fotovoltaické elektrárny. Instalace na klíč po celé ČR.
-        </p>
-        <div class="mt-4 flex gap-3">
-          <a href={site.social.facebook} target="_blank" rel="noopener noreferrer"
-            class="transition-colors hover:text-white" style="color: var(--theme-hero-accent-soft);">
-            Facebook
-          </a>
-          <span style="color: var(--theme-hero-accent-soft);">·</span>
-          <a href={site.social.instagram} target="_blank" rel="noopener noreferrer"
-            class="transition-colors hover:text-white" style="color: var(--theme-hero-accent-soft);">
-            Instagram
-          </a>
-        </div>
-      </div>
+<footer class="border-t border-surface-border bg-surface-muted">
+  <div
+    class="container-wide flex flex-col gap-3 py-8 sm:flex-row sm:items-center sm:justify-between"
+  >
+    <p class="text-sm text-text-muted">&copy; {year} {site.name}</p>
 
-      <!-- Column 2: Services -->
-      <div>
-        <h4 class="mb-3 text-sm font-semibold uppercase tracking-wider" style="color: var(--theme-hero-accent);">Služby</h4>
-        <ul class="space-y-2 text-sm" style="color: var(--theme-hero-accent-soft);">
-          <li><a href="/sluzby" class="transition-colors hover:text-white">Nabíjecí stanice Svolbox</a></li>
-          <li><a href="/sluzby" class="transition-colors hover:text-white">Fotovoltaické elektrárny</a></li>
-          <li><a href="/sluzby" class="transition-colors hover:text-white">Instalace na klíč</a></li>
-          <li>
-            <a href="https://svolbox.com" target="_blank" rel="noopener noreferrer"
-              class="transition-colors hover:text-white">svolbox.com &rarr;</a>
-          </li>
+    {
+      (email || phone) && (
+        <ul class="flex flex-wrap gap-x-5 gap-y-1 text-sm">
+          {email && (
+            <li>
+              <a
+                href={`mailto:${email}`}
+                class="text-brand transition-colors hover:text-brand-dark"
+              >
+                {email}
+              </a>
+            </li>
+          )}
+          {phone && (
+            <li>
+              <a
+                href={`tel:${phone.replace(/\s/g, "")}`}
+                class="text-brand transition-colors hover:text-brand-dark"
+              >
+                {phone}
+              </a>
+            </li>
+          )}
         </ul>
-      </div>
-
-      <!-- Column 3: Contact -->
-      <div>
-        <h4 class="mb-3 text-sm font-semibold uppercase tracking-wider" style="color: var(--theme-hero-accent);">Kontakt</h4>
-        <ul class="space-y-2 text-sm" style="color: var(--theme-hero-accent-soft);">
-          <li>
-            <a href={`mailto:${site.contact.email}`} class="transition-colors hover:text-white">
-              {site.contact.email}
-            </a>
-          </li>
-          <li>
-            <a href={`tel:${site.contact.phone.replace(/\s/g, '')}`} class="transition-colors hover:text-white">
-              {site.contact.phone}
-            </a>
-          </li>
-          <li>{site.contact.company}</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="mt-10 border-t pt-6 text-center text-xs" style="border-color: var(--theme-footer-border); color: var(--theme-hero-accent-soft);">
-      &copy; {new Date().getFullYear()} {site.contact.company}. Všechna práva vyhrazena.
-    </div>
+      )
+    }
   </div>
 </footer>

@@ -1,4 +1,4 @@
-name: Build & Deploy
+name: CI & Deploy
 
 on:
   push:
@@ -6,12 +6,44 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 concurrency:
-  group: deploy
+  group: deploy-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  # ---------------------------------------------------------------- gate 1
+  # Prohledá pracovní strom i celou historii větve na secrets.
+  # Běží nezávisle na buildu — když spadne, nic se nenasadí.
+  secrets:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (celá historie)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install gitleaks
+        env:
+          GITLEAKS_VERSION: 8.30.1
+        run: |
+          curl -sSfL \
+            "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            | tar -xz -C /usr/local/bin gitleaks
+          gitleaks version
+
+      - name: Scan pracovního stromu
+        run: gitleaks dir . --config .gitleaks.toml --redact --verbose
+
+      - name: Scan historie commitů
+        run: gitleaks git . --config .gitleaks.toml --redact --verbose
+
+  # ---------------------------------------------------------------- gate 2
+  verify:
+    name: Verify (format, types, build, checks)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,25 +52,57 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version-file: .nvmrc
           cache: npm
 
+      # npm ci selže, když package-lock.json neodpovídá package.json.
+      # To je záměrná gate proti ručně editovaným závislostem.
       - name: Install dependencies
         run: npm ci
+
+      - name: Repo hygiene
+        run: npm run check:repo
+
+      - name: Format check
+        run: npm run format:check
+
+      - name: Astro check (typy a šablony)
+        run: npm run check
 
       - name: Build
         run: npm run build
 
-      - name: Create Cloudflare Pages project
-        if: github.ref == 'refs/heads/main'
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: npx wrangler pages project create svobol-cz --production-branch=main 2>&1 || true
+      - name: Build output check
+        run: npm run check:build
 
-      - name: Deploy to Cloudflare Pages
+      - name: Upload build artifact (náhled pro PR)
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ github.sha }}
+          path: dist/
+          retention-days: 7
+
+      - name: Upload Pages artifact
         if: github.ref == 'refs/heads/main'
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: npx wrangler pages deploy dist/ --project-name=svobol-cz
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/
+
+  # ---------------------------------------------------------------- deploy
+  # Nasadí jen když obě gates prošly a jsme na main.
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: [secrets, verify]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

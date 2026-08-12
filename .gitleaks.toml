@@ -1,0 +1,21 @@
+# Konfigurace gitleaks — hledání secrets v repu.
+# Spouští se v CI (job "Secret scan") nad pracovním stromem i celou historií.
+# Lokálně: gitleaks dir . --config .gitleaks.toml --redact --verbose
+
+title = "svobol.cz"
+
+# Výchozí sada pravidel gitleaks (AWS, GitHub, Slack, Stripe, privátní klíče, …).
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Falešné poplachy"
+
+paths = [
+  '''package-lock\.json''',
+]
+
+# Doména vlastního webu není secret; hex barvy v CSS nejsou entropie.
+regexes = [
+  '''svobol\.cz''',
+]

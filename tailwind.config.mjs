@@ -21,9 +21,9 @@ export default {
           inverted: "var(--color-text-inverted)",
         },
       },
+      // Systémové fonty — web záměrně nenačítá nic z cizí domény.
       fontFamily: {
         sans: [
-          "Inter",
           "system-ui",
           "-apple-system",
           "Segoe UI",

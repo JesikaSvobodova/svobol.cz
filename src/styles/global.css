@@ -5,17 +5,17 @@
 @layer base {
   :root {
     /* Zelená — udržitelnost, energie, příroda */
-    --color-brand-dark: #14532D;
-    --color-brand: #16A34A;
-    --color-brand-light: #4ADE80;
-    --color-brand-lighter: #DCFCE7;
-    --color-surface: #FFFFFF;
-    --color-surface-muted: #F7FDF9;
-    --color-surface-border: #D1FAE5;
-    --color-text: #1F2937;
-    --color-text-muted: #6B7280;
-    --color-text-inverted: #FFFFFF;
-    --theme-hero-accent: #BBF7D0;
+    --color-brand-dark: #14532d;
+    --color-brand: #16a34a;
+    --color-brand-light: #4ade80;
+    --color-brand-lighter: #dcfce7;
+    --color-surface: #ffffff;
+    --color-surface-muted: #f7fdf9;
+    --color-surface-border: #d1fae5;
+    --color-text: #1f2937;
+    --color-text-muted: #6b7280;
+    --color-text-inverted: #ffffff;
+    --theme-hero-accent: #bbf7d0;
     --theme-hero-accent-soft: rgba(187, 247, 208, 0.8);
     --theme-footer-border: #166534;
   }
