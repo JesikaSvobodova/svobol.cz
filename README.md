@@ -8,7 +8,7 @@ kontrole se merge do `main` sám nasadí. Ručně se tu needituje nic.
 
 |         |                                    |
 | ------- | ---------------------------------- |
-| Stack   | Astro 5 (static) + Tailwind CSS 3  |
+| Stack   | Astro 7 (static) + Tailwind CSS 4  |
 | Hosting | GitHub Pages                       |
 | Deploy  | GitHub Actions, push do `main`     |
 | Backend | žádný — čisté statické HTML/CSS/JS |
@@ -57,6 +57,7 @@ Nic se nedostane na produkci, dokud tohle všechno neprojde. Běží lokálně p
 | **Astro check**             | typové chyby a chyby v šablonách                                                                    |
 | **Build**                   | že se web vůbec sestaví                                                                             |
 | **Build output check**      | rozbité interní odkazy, chybějící `<title>` / meta description / canonical, zapomenuté placeholdery |
+| **Browser testy**           | sedm viewportů, metadata, overflow, navigace, CTA, kontakty, interní odkazy, 404, robots a sitemap  |
 
 Deploy job má `needs: [secrets, verify]` — červená kontrola znamená,
 že se nenasadí vůbec nic.

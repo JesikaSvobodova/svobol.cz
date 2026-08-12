@@ -1,0 +1,118 @@
+---
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import CTASection from "@/components/CTASection.astro";
+import { site } from "@/data/site";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const title = "Realizace energetiky a nabíjení | svobol";
+const description =
+  "Ověřené realizace produktu Svolbox: nabíjení pro provozovnu, obec a ubytovací zařízení s řízením výkonu a automatizací provozu.";
+const pageUrl = `${site.url}/realizace`;
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "svobol", item: site.url },
+    { "@type": "ListItem", position: 2, name: "Realizace", item: pageUrl },
+  ],
+};
+---
+
+<BaseLayout {title} {description} {structuredData}>
+  <section class="dark-noise surface-grid text-white">
+    <div class="container-wide py-16 sm:py-20 lg:py-24">
+      <Breadcrumbs current="Realizace" />
+      <p class="eyebrow eyebrow-light">Ověřený provoz</p>
+      <h1 class="max-w-5xl text-[clamp(2.8rem,7vw,6rem)] font-bold leading-[0.95] text-white">
+        Méně tvrzení.<br /><span class="text-brand-orange">Více technického kontextu.</span>
+      </h1>
+      <p class="mt-7 max-w-3xl text-base leading-relaxed text-slate-300 sm:text-xl">
+        Ukazujeme pouze realizace veřejně publikované na first-party webu Svolboxu. Bez smyšlených
+        metrik, zákazníků nebo výsledků.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-space" aria-labelledby="realizace-title">
+    <div class="container-wide">
+      <div class="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
+        <div>
+          <p class="eyebrow">Případové studie</p>
+          <h2 id="realizace-title" class="section-title">Svolbox v provozu</h2>
+          <p class="section-lead">
+            Vlastní produkt svobolu spojuje nabíjecí hardware, měření, řízení a software. Tyto
+            instalace ukazují, jak se stejný základ přizpůsobuje odlišnému provozu.
+          </p>
+        </div>
+
+        <div class="space-y-8">
+          {
+            site.references.map((reference, index) => (
+              <article id={reference.slug} class="border border-surface-border bg-white">
+                <header class="grid gap-5 border-b border-surface-border p-6 sm:grid-cols-[1fr_auto] sm:items-start sm:p-8">
+                  <div>
+                    <p class="tech-label">{reference.type}</p>
+                    <h3 class="mt-4 text-2xl font-bold sm:text-3xl">{reference.title}</h3>
+                    <p class="mt-4 max-w-2xl text-sm leading-relaxed text-text-muted sm:text-base">
+                      {reference.summary}
+                    </p>
+                  </div>
+                  <span class="font-mono text-sm font-bold text-brand-orange-text">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                </header>
+                <dl class="grid gap-px bg-surface-border md:grid-cols-3">
+                  <div class="bg-white p-6">
+                    <dt class="tech-label">Výchozí potřeba</dt>
+                    <dd class="mt-4 text-sm leading-relaxed text-text-muted">
+                      {reference.challenge}
+                    </dd>
+                  </div>
+                  <div class="bg-white p-6">
+                    <dt class="tech-label">Technické řešení</dt>
+                    <dd class="mt-4 text-sm leading-relaxed text-text-muted">
+                      {reference.solution}
+                    </dd>
+                  </div>
+                  <div class="bg-white p-6">
+                    <dt class="tech-label">Praktický výsledek</dt>
+                    <dd class="mt-4 text-sm leading-relaxed text-text-muted">{reference.result}</dd>
+                  </div>
+                </dl>
+                <footer class="flex flex-wrap items-center justify-between gap-4 bg-surface-muted px-6 py-4 text-xs text-text-muted sm:px-8">
+                  <span>Zdroj: veřejná případová studie Svolbox</span>
+                  <a
+                    class="font-bold text-brand"
+                    href={reference.source}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Ověřit na svolbox.com <span aria-hidden="true">↗</span>
+                  </a>
+                </footer>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-surface-muted py-16 sm:py-20" aria-labelledby="reference-policy">
+    <div class="container-narrow text-center">
+      <p class="eyebrow justify-center">Zásada</p>
+      <h2 id="reference-policy" class="text-3xl font-bold sm:text-4xl">
+        Reference přidáváme až tehdy, když máme co konkrétně popsat.
+      </h2>
+      <p class="mx-auto mt-6 max-w-2xl text-text-muted">
+        Problém, výchozí stav, technické řešení a ověřitelný výsledek jsou důležitější než dlouhá
+        řada logotypů.
+      </p>
+    </div>
+  </section>
+
+  <CTASection
+    title="Řešíte podobný provoz, ale s jinými limity?"
+    text="Popište objekt, dostupný příkon, počet nabíjecích bodů a návaznost na FVE nebo baterii. Navrhneme řešení pro váš konkrétní scénář."
+  />
+</BaseLayout>

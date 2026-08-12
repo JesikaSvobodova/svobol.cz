@@ -1,0 +1,24 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Stránka nenalezena | svobol"
+  description="Požadovaná stránka na webu svobol.cz neexistuje. Pokračujte na úvod nebo nám popište svůj technický projekt."
+>
+  <section class="dark-noise surface-grid flex min-h-[70vh] items-center text-white">
+    <div class="container-narrow py-20 text-center">
+      <p class="font-mono text-sm font-bold uppercase tracking-[0.2em] text-brand-orange">
+        404 / bez signálu
+      </p>
+      <h1 class="mt-7 text-4xl font-bold text-white sm:text-6xl">Tahle cesta nikam nevede.</h1>
+      <p class="mx-auto mt-6 max-w-xl text-slate-300">
+        Stránka byla přesunuta, odstraněna nebo adresa není úplná.
+      </p>
+      <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+        <a class="btn-primary" href="/">Zpět na úvod</a>
+        <a class="btn-secondary" href="/kontakt">Popsat projekt</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

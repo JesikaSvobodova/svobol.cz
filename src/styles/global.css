@@ -1,82 +1,230 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@config "../../tailwind.config.mjs";
+@import "tailwindcss";
 
 @layer base {
   :root {
-    /* Zelená — udržitelnost, energie, příroda */
-    --color-brand-dark: #14532d;
-    --color-brand: #16a34a;
-    --color-brand-light: #4ade80;
-    --color-brand-lighter: #dcfce7;
-    --color-surface: #ffffff;
-    --color-surface-muted: #f7fdf9;
-    --color-surface-border: #d1fae5;
-    --color-text: #1f2937;
-    --color-text-muted: #6b7280;
-    --color-text-inverted: #ffffff;
-    --theme-hero-accent: #bbf7d0;
-    --theme-hero-accent-soft: rgba(187, 247, 208, 0.8);
-    --theme-footer-border: #166534;
+    /* Přesné DNA Svolbox: #193191 + #ff9b28. Ostatní tóny jsou svobol systém. */
+    --color-ink: #081f3f;
+    --color-brand-deep: #0e286e;
+    --color-brand: #193191;
+    --color-brand-bright: #3458c9;
+    --color-brand-pale: #e9edfb;
+    --color-accent: #ff9b28;
+    --color-accent-text: #914600;
+    --color-accent-pale: #fff0dc;
+    --color-surface: #faf9f6;
+    --color-paper: #ffffff;
+    --color-surface-muted: #f0f2f6;
+    --color-surface-dark: #07172f;
+    --color-border: #d8deea;
+    --color-text: #111827;
+    --color-text-muted: #4d5c70;
+    --color-text-faint: #5f6d82;
+    --color-text-inverted: #f8fafc;
+    --content-wide: 76rem;
+    --content-narrow: 46rem;
+    --section-space: clamp(4.5rem, 8vw, 8rem);
   }
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   body {
-    @apply font-sans;
-    color: var(--color-text);
-    background-color: var(--color-surface);
+    @apply m-0 min-w-0 overflow-x-hidden bg-surface font-sans text-text;
+    line-height: 1.65;
   }
 
   h1,
   h2,
   h3,
   h4 {
-    @apply font-bold tracking-tight;
-    color: var(--color-brand-dark);
+    @apply text-brand-ink;
+    line-height: 1.06;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    text-underline-offset: 0.22em;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    color: var(--color-ink);
+    background: var(--color-accent);
   }
 }
 
 @layer components {
-  .container-narrow {
-    @apply mx-auto max-w-3xl px-5 sm:px-6;
+  .container-wide {
+    width: min(100% - 2.25rem, var(--content-wide));
+    margin-inline: auto;
   }
 
-  .container-wide {
-    @apply mx-auto max-w-6xl px-5 sm:px-6;
+  .container-narrow {
+    width: min(100% - 2.25rem, var(--content-narrow));
+    margin-inline: auto;
+  }
+
+  .section-space {
+    padding-block: var(--section-space);
+  }
+
+  .eyebrow {
+    @apply mb-5 flex items-center gap-3 font-mono text-[0.7rem] font-bold uppercase tracking-[0.17em] text-brand;
+  }
+
+  .eyebrow::before {
+    content: "";
+    @apply h-2 w-2 shrink-0 bg-brand-orange;
+    clip-path: polygon(0 0, 100% 0, 66% 100%, 0 100%);
+  }
+
+  .eyebrow-light {
+    @apply text-blue-200;
+  }
+
+  .section-title {
+    @apply max-w-4xl text-3xl font-bold sm:text-4xl lg:text-5xl;
+  }
+
+  .section-lead {
+    @apply mt-6 max-w-reading text-base text-text-muted sm:text-lg;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-light {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-bold no-underline transition duration-200 sm:px-6;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-lg px-6 py-3 text-sm font-semibold text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
-    background-color: var(--color-brand);
+    @apply bg-brand-orange text-brand-ink;
+    box-shadow: 0 8px 24px rgba(255, 155, 40, 0.2);
   }
+
   .btn-primary:hover {
-    background-color: var(--color-brand-dark);
-    @apply shadow-md -translate-y-px;
-  }
-  .btn-primary:focus {
-    --tw-ring-color: var(--color-brand);
+    @apply -translate-y-0.5 bg-white;
   }
 
-  .btn-outline {
-    @apply inline-flex items-center justify-center rounded-lg border-2 px-6 py-3 text-sm font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
-    border-color: var(--color-brand);
-    color: var(--color-brand);
-  }
-  .btn-outline:hover {
-    background-color: var(--color-brand);
-    color: white;
-    @apply shadow-md -translate-y-px;
-  }
-  .btn-outline:focus {
-    --tw-ring-color: var(--color-brand);
+  .btn-secondary {
+    @apply border border-white/30 text-white;
   }
 
-  .dark-section-text {
-    color: var(--theme-hero-accent);
+  .btn-secondary:hover {
+    @apply border-white bg-white text-brand-ink;
+  }
+
+  .btn-light {
+    @apply border border-brand/20 bg-white text-brand;
+  }
+
+  .btn-light:hover {
+    @apply -translate-y-0.5 border-brand bg-brand text-white;
+  }
+
+  .text-link {
+    @apply inline-flex min-h-11 items-center gap-2 font-bold text-brand no-underline transition-colors;
+  }
+
+  .text-link::after {
+    content: "→";
+    @apply transition-transform;
+  }
+
+  .text-link:hover {
+    @apply text-brand-bright;
+  }
+
+  .text-link:hover::after {
+    @apply translate-x-1;
+  }
+
+  .tech-label {
+    @apply font-mono text-[0.68rem] font-bold uppercase tracking-[0.14em] text-brand;
+  }
+
+  .surface-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 2.5rem 2.5rem;
+  }
+
+  .dark-noise {
+    background:
+      radial-gradient(circle at 82% 18%, rgba(52, 88, 201, 0.35), transparent 28rem),
+      radial-gradient(circle at 8% 92%, rgba(255, 155, 40, 0.09), transparent 22rem),
+      var(--color-surface-dark);
+  }
+
+  .card-line {
+    @apply relative bg-surface-paper p-6 sm:p-8;
+    box-shadow: inset 0 1px 0 var(--color-border);
+  }
+
+  .card-line::before {
+    content: "";
+    @apply absolute left-0 top-0 h-px w-14 bg-brand-orange;
+  }
+
+  .check-list {
+    @apply space-y-3;
+  }
+
+  .check-list li {
+    @apply relative pl-7 text-sm text-text-muted sm:text-base;
+  }
+
+  .check-list li::before {
+    content: "";
+    @apply absolute left-0 top-[0.63em] h-2.5 w-2.5 border border-brand;
+  }
+
+  .check-list-positive li::before {
+    @apply border-0 bg-brand-orange;
+    clip-path: polygon(0 45%, 38% 100%, 100% 0, 100% 38%, 40% 100%);
+  }
+
+  .skip-link {
+    @apply fixed left-4 top-3 z-[100] -translate-y-24 rounded bg-brand-orange px-4 py-3 font-bold text-brand-ink transition-transform;
+  }
+
+  .skip-link:focus {
+    @apply translate-y-0;
+  }
+}
+
+@media (min-width: 640px) {
+  .container-wide,
+  .container-narrow {
+    width: min(100% - 3rem, var(--content-wide));
+  }
+
+  .container-narrow {
+    width: min(100% - 3rem, var(--content-narrow));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }

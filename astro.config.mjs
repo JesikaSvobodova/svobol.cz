@@ -1,7 +1,7 @@
 // @ts-check
 import { defineConfig } from "astro/config";
-import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   // Kanonická doména. Musí sedět s public/CNAME a se `site.url`
@@ -11,7 +11,11 @@ export default defineConfig({
   // Statický výstup do dist/. Žádný server, žádný runtime.
   output: "static",
 
-  integrations: [tailwind(), sitemap()],
+  integrations: [sitemap()],
+
+  vite: {
+    plugins: [tailwindcss()],
+  },
 
   // Odkazy bez koncového lomítka (/kontakt), server je akceptuje obojí.
   trailingSlash: "ignore",

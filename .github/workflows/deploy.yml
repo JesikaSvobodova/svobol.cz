@@ -60,6 +60,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install browser for end-to-end tests
+        run: npx playwright install --with-deps chromium
+
       - name: Repo hygiene
         run: npm run check:repo
 
@@ -74,6 +77,9 @@ jobs:
 
       - name: Build output check
         run: npm run check:build
+
+      - name: Browser tests
+        run: npm run test:e2e
 
       - name: Upload build artifact (náhled pro PR)
         uses: actions/upload-artifact@v4
