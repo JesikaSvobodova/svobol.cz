@@ -1,0 +1,210 @@
+---
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import CTASection from "@/components/CTASection.astro";
+import type { ServicePageData } from "@/data/pages";
+import { site } from "@/data/site";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+interface Props {
+  data: ServicePageData;
+}
+
+const { data } = Astro.props;
+const pageUrl = `${site.url}/${data.slug}`;
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: data.eyebrow,
+    description: data.metaDescription,
+    provider: { "@type": "Organization", name: site.legalName, url: site.url },
+    areaServed: { "@type": "Country", name: "Česká republika" },
+    url: pageUrl,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "svobol", item: site.url },
+      { "@type": "ListItem", position: 2, name: data.eyebrow, item: pageUrl },
+    ],
+  },
+];
+---
+
+<BaseLayout title={data.metaTitle} description={data.metaDescription} {structuredData}>
+  <section class="dark-noise surface-grid text-white">
+    <div
+      class="container-wide grid gap-12 py-16 sm:py-20 lg:grid-cols-[minmax(0,1.2fr)_minmax(20rem,0.8fr)] lg:items-end lg:py-24"
+    >
+      <div>
+        <Breadcrumbs current={data.breadcrumb} />
+        <p class="eyebrow eyebrow-light">{data.eyebrow}</p>
+        <h1 class="max-w-5xl text-[clamp(2.5rem,6vw,5.3rem)] font-bold leading-[0.98] text-white">
+          {data.title}
+        </h1>
+        <p class="mt-7 max-w-3xl text-base leading-relaxed text-slate-300 sm:text-xl">
+          {data.lead}
+        </p>
+      </div>
+
+      <div class="border-l border-white/20 pl-5 sm:pl-7">
+        <p class="tech-label !text-blue-200">Řídicí řetězec</p>
+        <ol class="mt-5 space-y-4">
+          {
+            data.signal.map((item, index) => (
+              <li class="flex items-center gap-4 text-sm font-bold text-white sm:text-base">
+                <span class="flex h-8 w-8 shrink-0 items-center justify-center border border-white/20 font-mono text-[0.65rem] text-brand-orange">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span>{item}</span>
+                {index < data.signal.length - 1 && (
+                  <span class="ml-auto text-brand-orange" aria-hidden="true">
+                    ↓
+                  </span>
+                )}
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space" aria-labelledby={`${data.slug}-intro`}>
+    <div class="container-wide grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20">
+      <div>
+        <p class="eyebrow">Problém a kontext</p>
+        <h2 id={`${data.slug}-intro`} class="section-title">{data.intro.title}</h2>
+        <p class="section-lead">{data.intro.text}</p>
+      </div>
+      <div class="grid gap-px bg-surface-border sm:grid-cols-3 lg:grid-cols-1">
+        {
+          data.situations.map((item, index) => (
+            <article class="bg-surface-paper p-6 sm:p-7 lg:grid lg:grid-cols-[3rem_1fr] lg:gap-4">
+              <span class="font-mono text-xs font-bold text-brand-orange-text">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <h3 class="mt-3 text-xl font-bold lg:mt-0">{item.title}</h3>
+                <p class="mt-3 text-sm leading-relaxed text-text-muted">{item.text}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-surface-muted section-space" aria-labelledby={`${data.slug}-system`}>
+    <div class="container-wide">
+      <div class="grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-end">
+        <div>
+          <p class="eyebrow">Systémový pohled</p>
+          <h2 id={`${data.slug}-system`} class="section-title">{data.systemTitle}</h2>
+        </div>
+        <p class="max-w-reading text-base text-text-muted lg:justify-self-end sm:text-lg">
+          {data.systemText}
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-px bg-surface-border sm:grid-cols-2 lg:grid-cols-4">
+        {
+          data.systemItems.map((item, index) => (
+            <article class="group relative min-h-64 bg-white p-6 transition-colors hover:bg-brand-ink sm:p-7">
+              <div class="flex items-center justify-between">
+                <span class="tech-label group-hover:text-blue-200">{item.code}</span>
+                <span class="font-mono text-xs text-text-faint group-hover:text-slate-400">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+              </div>
+              <h3 class="mt-14 text-2xl font-bold group-hover:text-white">{item.title}</h3>
+              <p class="mt-4 text-sm leading-relaxed text-text-muted group-hover:text-slate-300">
+                {item.text}
+              </p>
+            </article>
+          ))
+        }
+      </div>
+
+      {
+        data.technologies && (
+          <ul class="mt-8 flex flex-wrap gap-2" aria-label="Používané technologie Victron">
+            {data.technologies.map((item) => (
+              <li class="rounded border border-brand/20 bg-brand-pale px-3 py-2 font-mono text-xs font-bold uppercase tracking-wider text-brand">
+                {item}
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </section>
+
+  <section class="section-space" aria-labelledby={`${data.slug}-scope`}>
+    <div class="container-wide grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+      <div>
+        <p class="eyebrow">Rozsah</p>
+        <h2 id={`${data.slug}-scope`} class="section-title">{data.capabilitiesTitle}</h2>
+      </div>
+      <ul class="grid gap-px bg-surface-border sm:grid-cols-2">
+        {
+          data.capabilities.map((item, index) => (
+            <li class="flex min-h-28 items-start gap-4 bg-white p-5 sm:p-6">
+              <span class="mt-1 font-mono text-[0.65rem] font-bold text-brand-orange-text">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span class="font-semibold leading-relaxed text-brand-ink">{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="bg-brand-ink text-white section-space" aria-labelledby={`${data.slug}-process`}>
+    <div class="container-wide">
+      <p class="eyebrow eyebrow-light">Postup projektu</p>
+      <h2 id={`${data.slug}-process`} class="section-title !text-white">
+        Od zadání k ověřenému provozu
+      </h2>
+      <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        {
+          data.process.map((step) => (
+            <article class="border-t border-white/20 pt-6">
+              <p class="font-mono text-xs font-bold text-brand-orange">{step.number}</p>
+              <h3 class="mt-7 text-xl font-bold text-white">{step.title}</h3>
+              <p class="mt-4 text-sm leading-relaxed text-slate-300">{step.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space" aria-labelledby={`${data.slug}-fit`}>
+    <div class="container-wide grid gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:gap-20">
+      <div>
+        <p class="eyebrow">Kvalifikace projektu</p>
+        <h2 id={`${data.slug}-fit`} class="section-title">{data.fit.title}</h2>
+        <p class="section-lead">{data.fit.text}</p>
+      </div>
+      <div class="grid gap-8 sm:grid-cols-2">
+        <div class="bg-brand-pale p-6 sm:p-8">
+          <h3 class="text-lg font-bold">Dává smysl řešit s námi</h3>
+          <ul class="check-list check-list-positive mt-6">
+            {data.fit.good.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+        <div class="border border-surface-border p-6 sm:p-8">
+          <h3 class="text-lg font-bold">Není naše zaměření</h3>
+          <ul class="check-list mt-6">
+            {data.fit.notFor.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTASection title={data.cta.title} text={data.cta.text} />
+</BaseLayout>

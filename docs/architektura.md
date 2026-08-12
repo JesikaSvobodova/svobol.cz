@@ -36,8 +36,8 @@ nenasadí se nic — nejde to obejít jinak než úpravou workflow.
 
 | Vrstva    | Nástroj             | Proč zrovna tenhle                                                                                                |
 | --------- | ------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| Generátor | Astro 5             | Ve výchozím stavu posílá **nula JS**. Komponenty jsou obyčejné HTML se skriptovací částí.                         |
-| Styly     | Tailwind CSS 3      | Utility třídy přímo v šabloně; agent nemusí skákat mezi soubory a vymýšlet názvy tříd.                            |
+| Generátor | Astro 7             | Ve výchozím stavu posílá **nula JS**. Komponenty jsou obyčejné HTML se skriptovací částí.                         |
+| Styly     | Tailwind CSS 4      | Utility třídy přímo v šabloně; agent nemusí skákat mezi soubory a vymýšlet názvy tříd.                            |
 | Barvy     | CSS proměnné        | Definované jednou v `src/styles/global.css`, Tailwind na ně jen odkazuje. Přebarvení webu = změna několika řádků. |
 | Obsah     | `src/data/site.ts`  | Texty odděleně od šablon. `as const` dělá z překlepu chybu při `npm run check`.                                   |
 | Typy      | TypeScript (strict) | Chyba spadne v CI, ne na produkci.                                                                                |

@@ -1,0 +1,17 @@
+---
+interface Props {
+  current: string;
+}
+
+const { current } = Astro.props;
+---
+
+<nav aria-label="Drobečková navigace" class="mb-8">
+  <ol
+    class="flex flex-wrap items-center gap-2 font-mono text-[0.68rem] font-bold uppercase tracking-[0.12em] text-slate-400"
+  >
+    <li><a class="transition-colors hover:text-white" href="/">svobol</a></li>
+    <li aria-hidden="true">/</li>
+    <li aria-current="page" class="text-blue-200">{current}</li>
+  </ol>
+</nav>

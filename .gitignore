@@ -31,3 +31,6 @@ soukrome/
 .DS_Store
 Thumbs.db
 *.log
+screenshots/
+test-results/
+playwright-report/

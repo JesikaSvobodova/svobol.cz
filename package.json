@@ -14,19 +14,23 @@
     "check": "astro check",
     "check:build": "node scripts/check-build.mjs",
     "check:repo": "node scripts/check-repo.mjs",
+    "test:e2e": "playwright test",
+    "test:visual": "VISUAL_QA=1 playwright test tests/visual.spec.ts --project=visual",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "verify": "npm run format:check && npm run check && npm run build && npm run check:build && npm run check:repo"
+    "verify": "npm run format:check && npm run check && npm run build && npm run check:build && npm run check:repo && npm run test:e2e"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.3.1",
-    "@astrojs/tailwind": "^6.0.2",
-    "astro": "^5.5.0",
-    "sharp": "^0.33.5",
-    "tailwindcss": "^3.4.17"
+    "@astrojs/sitemap": "^3.7.3",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.2.1",
+    "sharp": "^0.35.3",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.4",
+    "@astrojs/check": "^0.9.10",
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.62.1",
     "prettier": "^3.4.2",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^5.7.3"

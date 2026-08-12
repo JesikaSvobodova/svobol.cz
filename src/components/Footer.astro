@@ -1,45 +1,67 @@
 ---
-/**
- * Patička. Kontakty se berou ze `site.contact` — prázdné hodnoty se
- * záměrně nevykreslí, ať na webu nesvítí prázdný řádek nebo placeholder.
- */
+import Wordmark from "@/components/Wordmark.astro";
 import { site } from "@/data/site";
 
-const { email, phone } = site.contact;
 const year = new Date().getFullYear();
 ---
 
-<footer class="border-t border-surface-border bg-surface-muted">
-  <div
-    class="container-wide flex flex-col gap-3 py-8 sm:flex-row sm:items-center sm:justify-between"
-  >
-    <p class="text-sm text-text-muted">&copy; {year} {site.name}</p>
+<footer class="bg-surface-dark text-white">
+  <div class="container-wide grid gap-12 py-14 md:grid-cols-[1.2fr_1fr_1fr] md:py-20">
+    <div>
+      <a href="/" class="inline-flex no-underline" aria-label="svobol — domů"><Wordmark light /></a>
+      <p class="mt-5 max-w-xs text-sm leading-relaxed text-slate-300">{site.footer.statement}</p>
+    </div>
 
-    {
-      (email || phone) && (
-        <ul class="flex flex-wrap gap-x-5 gap-y-1 text-sm">
-          {email && (
+    <div>
+      <h2 class="font-mono text-xs font-bold uppercase tracking-[0.15em] text-blue-200">
+        Navigace
+      </h2>
+      <ul class="mt-4 grid gap-2 text-sm text-slate-300">
+        {
+          site.nav.map((item) => (
             <li>
-              <a
-                href={`mailto:${email}`}
-                class="text-brand transition-colors hover:text-brand-dark"
-              >
-                {email}
+              <a class="inline-flex min-h-8 items-center hover:text-white" href={item.href}>
+                {item.label}
               </a>
             </li>
-          )}
-          {phone && (
-            <li>
-              <a
-                href={`tel:${phone.replace(/\s/g, "")}`}
-                class="text-brand transition-colors hover:text-brand-dark"
-              >
-                {phone}
-              </a>
-            </li>
-          )}
-        </ul>
-      )
-    }
+          ))
+        }
+        <li>
+          <a class="inline-flex min-h-8 items-center hover:text-white" href="/kontakt">Kontakt</a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="font-mono text-xs font-bold uppercase tracking-[0.15em] text-blue-200">
+        Technický projekt
+      </h2>
+      <ul class="mt-4 space-y-3 text-sm">
+        <li>
+          <a
+            class="text-white hover:text-brand-orange"
+            href={`mailto:${site.contact.email}?subject=${encodeURIComponent(site.contact.emailSubject)}`}
+            >{site.contact.email}</a
+          >
+        </li>
+        <li>
+          <a class="text-white hover:text-brand-orange" href={`tel:${site.contact.phoneHref}`}
+            >{site.contact.phone}</a
+          >
+        </li>
+      </ul>
+      <p class="mt-5 text-xs leading-relaxed text-slate-400">
+        {site.legalName}<br />IČO {site.company.ico}
+      </p>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div
+      class="container-wide flex flex-col gap-2 py-5 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>&copy; {year} {site.legalName}</p>
+      <p>Statický web bez trackerů a externích fontů.</p>
+    </div>
   </div>
 </footer>

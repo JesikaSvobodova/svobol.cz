@@ -12,7 +12,7 @@ co smíš a nesmíš.
 |                  |                                                |
 | ---------------- | ---------------------------------------------- |
 | **Web**          | https://svobol.cz                              |
-| **Stack**        | Astro 5 (static) + Tailwind CSS 3              |
+| **Stack**        | Astro 7 (static) + Tailwind CSS 4              |
 | **Hosting**      | GitHub Pages, deploy přes GitHub Actions       |
 | **Backend**      | žádný — výstupem je čisté statické HTML/CSS/JS |
 | **Jazyk obsahu** | čeština (`lang="cs"`)                          |

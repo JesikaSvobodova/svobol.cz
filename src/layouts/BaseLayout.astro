@@ -1,25 +1,21 @@
 ---
-/**
- * Základní layout — <head>, hlavička, patička.
- * Každá stránka v src/pages/ ho má obalovat.
- *
- * Pozn.: web záměrně nenačítá nic z cizí domény (žádné CDN, fonty ani
- * trackery). Typografie stojí na systémových fontech. Nepřidávej externí
- * <link> ani <script> bez výslovného zadání — viz CLAUDE.md.
- */
-import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import { site } from "@/data/site";
+import Header from "@/components/Header.astro";
+import { organizationSchema, site } from "@/data/site";
 import "@/styles/global.css";
 
 interface Props {
   title?: string;
   description?: string;
+  structuredData?: Record<string, unknown> | readonly Record<string, unknown>[];
 }
 
-const { title = site.title, description = site.description } = Astro.props;
-
+const { title = site.title, description = site.description, structuredData } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, site.url);
+const socialImage = new URL(site.socialPreview, site.url);
+const schema = structuredData
+  ? [organizationSchema, ...(Array.isArray(structuredData) ? structuredData : [structuredData])]
+  : organizationSchema;
 ---
 
 <!doctype html>
@@ -28,6 +24,8 @@ const canonicalURL = new URL(Astro.url.pathname, site.url);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content={site.themeColor} />
+    <meta name="color-scheme" content="light" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <title>{title}</title>
@@ -40,15 +38,21 @@ const canonicalURL = new URL(Astro.url.pathname, site.url);
     <meta property="og:description" content={description} />
     <meta property="og:locale" content={site.locale} />
     <meta property="og:site_name" content={site.name} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content="svobol — řízení energetických systémů" />
 
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
   </head>
 
   <body class="flex min-h-screen flex-col">
+    <a class="skip-link" href="#hlavni-obsah">Přeskočit na obsah</a>
     <Header />
-    <main class="flex-1">
+    <main id="hlavni-obsah" class="min-w-0 flex-1">
       <slot />
     </main>
     <Footer />

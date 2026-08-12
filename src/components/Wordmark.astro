@@ -1,0 +1,31 @@
+---
+interface Props {
+  light?: boolean;
+}
+
+const { light = false } = Astro.props;
+---
+
+<span class:list={["wordmark", light ? "text-white" : "text-brand-ink"]}>
+  <svg viewBox="0 0 13 18" width="13" height="18" aria-hidden="true">
+    <path d="M8.2 0 1 10.2h5L4.9 18 12 7.4H7.1L8.2 0Z" fill="currentColor"></path>
+  </svg>
+  <span>svobol</span>
+</span>
+
+<style>
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.48rem;
+    font-size: 1.3rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.045em;
+  }
+
+  .wordmark svg {
+    color: var(--color-accent);
+    flex: none;
+  }
+</style>
