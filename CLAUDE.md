@@ -56,8 +56,12 @@ neplatí za hotové. Nehlas úspěch, dokud jsi verify neviděl projít.
 - Nepřidávej žádnou službu, která potřebuje secret v repu nebo v GitHub Secrets.
   Když deploy potřebuje token, je to špatný deploy — tenhle web ho nepotřebuje.
 - Nepřidávej externí skripty, fonty, CDN ani trackery bez výslovného zadání.
-  Web dnes nedělá **žádný** požadavek na cizí doménu a to je záměr (výkon,
-  GDPR, žádné cookie lišty).
+  Web sahá na **jedinou** cizí doménu — vlastní Umami na
+  `analytics.svobol.com` (konfigurace v `src/data/site.ts` → `analytics`,
+  vloženo v `BaseLayout.astro`). Nic dalšího tam přibýt nesmí; test
+  `tests/analytics.spec.ts` to hlídá a spadne, když přibude druhý origin.
+  Umami nepoužívá cookies ani nic nezapisuje do zařízení návštěvníka, proto
+  web nemá a nepotřebuje cookie lištu. Nepřidávej ji.
 - Nevymýšlej si fakta o firmě — IČO, adresy, telefony, certifikace, reference,
   počty zakázek. Když údaj nemáš, nech placeholder a **zeptej se**. Vymyšlený
   údaj na živém webu je horší než chybějící.
@@ -86,6 +90,7 @@ neplatí za hotové. Nehlas úspěch, dokud jsi verify neviděl projít.
 | Barvy, typografii                     | `src/styles/global.css` (CSS proměnné) + `tailwind.config.mjs` |
 | `<head>`, meta tagy, OG               | `src/layouts/BaseLayout.astro`                                 |
 | Statické soubory (obrázky, favicon)   | `public/`                                                      |
+| Analytiku (Umami)                     | `src/data/site.ts` → `analytics`                               |
 | CI a deploy                           | `.github/workflows/deploy.yml`                                 |
 
 Barvy se definují **jednou** jako CSS proměnné v `src/styles/global.css` a

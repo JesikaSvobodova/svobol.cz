@@ -31,6 +31,30 @@ export const site = {
     registry: "C 381544 vedená u Městského soudu v Praze",
   },
 
+  /**
+   * Umami — vlastní analytika na vlastní doméně. Jediný požadavek, který web
+   * dělá na cizí origin. Bez cookies, bez zápisu do zařízení návštěvníka,
+   * proto bez cookie lišty.
+   *
+   * `websiteId` NENÍ secret — je veřejně v HTML každé stránky. Je to
+   * identifikátor webu na měřicí instanci, ne přístupový údaj.
+   *
+   * `scriptUrl` má schválně jedno lomítko. Varianta s dvojitým
+   * (`analytics.svobol.com//svb.js`) odpovídá 308 redirectem na `/svb.js`,
+   * tzn. hop navíc při každém načtení stránky. Endpoint pro sběr si skript
+   * odvozuje z adresáře vlastního `src` — pro obě varianty vyjde stejně,
+   * `https://analytics.svobol.com/svb-collect`.
+   *
+   * `domains` omezuje sběr na produkční doménu. Localhost, CI i náhledové
+   * buildy tak nezanášejí reálnou statistiku. `www.svobol.cz` sem nepatří,
+   * odpovídá 301 přesměrováním na apex.
+   */
+  analytics: {
+    scriptUrl: "https://analytics.svobol.com/svb.js",
+    websiteId: "d1ca27a1-b2dd-4011-a2e6-e1ee100c7ea8",
+    domains: "svobol.cz",
+  },
+
   nav: [
     { label: "Řízení energie", href: "/rizeni-energie" },
     { label: "Nabíjení", href: "/nabijeni-elektromobilu" },

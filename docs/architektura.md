@@ -55,9 +55,12 @@ Až bude potřeba blog nebo delší texty, přijdou Astro content collections
 
 - **Žádné secrets ani GitHub Secrets.** Deploy je nepotřebuje. Kdyby je někdy
   potřeboval, je něco špatně v návrhu, ne v konfiguraci.
-- **Žádné externí volání.** Web nenačítá cizí fonty, CDN, analytiku ani
-  trackery. Nula požadavků na cizí doménu znamená rychlé načtení, žádnou
-  cookie lištu a žádný GDPR problém.
+- **Žádné cizí fonty, CDN ani reklamní trackery.** Jediný požadavek mimo
+  vlastní origin je měřicí skript vlastní Umami instance na
+  `analytics.svobol.com` (4,6 kB, `defer`). Umami je cookieless, nezapisuje
+  nic do zařízení návštěvníka a data zůstávají na vlastním serveru — proto
+  web nemá cookie lištu a nepotřebuje ji. Že žádný další cizí origin
+  nepřibyl, hlídá `tests/analytics.spec.ts`.
 - **Žádný build cache trik ani generovaný obsah v gitu.** `dist/` a `.astro/`
   jsou v `.gitignore` a `check:repo` hlídá, že se tam nedostanou.
 
