@@ -73,7 +73,9 @@ neplatí za hotové. Nehlas úspěch, dokud jsi verify neviděl projít.
 - Obsah patří do `src/data/*.ts`, ne do šablon. Když měníš text, hledej ho
   nejdřív tam.
 - Před commitem `npm run verify`.
-- Pracuj na větvi a otevři PR. Do `main` se nepushuje přímo.
+- Pracuj na větvi. Push do `main` je povolený (viz `.claude/settings.json`),
+  ale až po zeleném `npm run verify` — v `main` končí jen ověřená práce.
+  Force push a mazání větví povolené nejsou.
 - Česky, s diakritikou, ve výstupním obsahu i v commit zprávách.
 
 ---
