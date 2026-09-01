@@ -23,7 +23,7 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
     "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.2.1",
+    "astro": "^7.2.9",
     "sharp": "^0.35.3",
     "tailwindcss": "^4.3.3"
   },
@@ -33,6 +33,6 @@
     "@playwright/test": "^1.62.1",
     "prettier": "^3.4.2",
     "prettier-plugin-astro": "^0.14.1",
-    "typescript": "^5.7.3"
+    "typescript": "^7.0.2"
   }
 }
